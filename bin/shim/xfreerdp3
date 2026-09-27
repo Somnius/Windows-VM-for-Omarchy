@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Stands in for xfreerdp3 on the PATH of Omarchy's launcher, so the RDP window
+# it opens reconnects by itself when the connection through Docker drops,
+# instead of closing. Only the unprivileged RDP client is wrapped; the
+# launcher itself and everything it runs as root are untouched.
+#
+# The arguments, including the launcher's /p:password, are passed to FreeRDP
+# through a file descriptor, so they don't stay readable in the long-running
+# client's /proc/<pid>/cmdline.
+
+set -u
+
+# Never run twice: if PATH still leads back here, give up instead of looping.
+[[ -n ${WINVM_XFREERDP_SHIM:-} ]] && { echo "xfreerdp3 not found" >&2; exit 127; }
+export WINVM_XFREERDP_SHIM=1
+
+real=/usr/bin/xfreerdp3
+if [[ ! -x $real ]]; then
+  # Not in /usr/bin: find it on PATH without this directory.
+  here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+  PATH=$(tr ':' '\n' <<<"$PATH" | grep -vxF -- "$here" | paste -sd:)
+  real=$(command -v xfreerdp3) || { echo "xfreerdp3 not found" >&2; exit 127; }
+fi
+
+# FreeRDP won't combine /args-from with anything else: pass such calls through.
+if [[ ${1:-} == /args-from:* ]]; then
+  exec "$real" "$@"
+fi
+
+# One argument per line. An argument containing a newline can't be expressed
+# that way, so fall back to plain argv in that (never expected) case.
+for a in "$@"; do
+  [[ $a == *$'\n'* ]] && exec "$real" "$@" /auto-reconnect /auto-reconnect-max-retries:5
+done
+
+exec 3< <(printf '%s\n' "$@" /auto-reconnect /auto-reconnect-max-retries:5)
+exec "$real" /args-from:fd:3

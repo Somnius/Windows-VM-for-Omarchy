@@ -1,0 +1,38 @@
+Windows VM for Omarchy
+Copyright (c) 2026 lef. Released under the MIT License (see LICENSE).
+
+Version 1.1.0 adapts ideas and code from:
+
+  omarchy-winvm — https://github.com/jonspinks/omarchy-winvm
+  (commit 7d62aabf19694a20df7492dd12b573d7c0f9318e)
+
+Adapted parts, each marked with a header comment:
+  - bin/Sample.sh   from bin/winvm-sample   (unprivileged cgroup and /proc sampling)
+  - bin/Connect.sh  from bin/winvm-connect  (direct RDP reconnect with saved credentials over a file descriptor)
+  - Launch.sh stop  from bin/winvm-stop     (handing the stop to a waiting launcher)
+  - Logic.js        from Model.js           (rates from counter deltas, formatting)
+  - MeterRow.qml    from MeterRow.qml       (resource meter row)
+
+Those parts are used under the following license:
+
+MIT License
+
+Copyright (c) 2026 Jon Spinks
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

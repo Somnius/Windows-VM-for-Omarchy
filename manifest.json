@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "id": "lef.windows-vm",
   "name": "Windows VM",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "lef",
   "license": "MIT",
-  "description": "Shows on the bar whether Omarchy's Windows VM is running. Open the Windows desktop, restart or shut down from a panel. The VM stays up when the RDP window closes, and each start is logged.",
+  "description": "Control Omarchy's Windows VM from the bar: connect without a password prompt, RDP that reconnects by itself, restart and shut down. Zero background cost: live CPU, memory, disk and network graphs are gathered only while the panel is open. Web console, shared folder, terminal and lazydocker shortcuts, optional keep-alive.",
   "kinds": [
     "service",
     "bar-widget"
@@ -17,7 +17,7 @@
   },
   "barWidget": {
     "displayName": "Windows VM",
-    "description": "Windows VM status: click for the panel, right-click for the Windows desktop.",
+    "description": "Windows VM control and on-demand stats: click for the panel, right-click for the Windows desktop.",
     "category": "System",
     "allowMultiple": false,
     "defaultSection": "right"

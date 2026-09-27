@@ -12,8 +12,15 @@ BarWidget {
     ? bar.shell.serviceFor(root.moduleName) : null
   readonly property bool ready: service !== null && service.loaded
   readonly property bool running: ready && service.running
-  readonly property bool busy: ready && service.busy
+  readonly property bool busy: ready && (service.busy || service.state === "starting")
   readonly property bool hidden: ready && service.hideWhenStopped && !running && !busy
+
+  property bool hovered: false
+  // Destroyed mid-hover (bar reload): release the hover.
+  Component.onDestruction: if (hovered && service) service.hoverChanged(false)
+  readonly property string tip: ready ? service.summaryText : "Windows VM"
+  // Keep an open tooltip current, e.g. once the RDP window check comes back.
+  onTipChanged: if (hovered && bar) bar.showTooltip(root, tip)
 
   visible: !hidden
   implicitWidth: hidden ? 0 : glyph.implicitWidth + Style.space(12)
@@ -66,9 +73,19 @@ BarWidget {
       if (mouse.button === Qt.RightButton) root.service.showRdp()
       else root.toggle()
     }
-    onEntered: if (root.bar) root.bar.showTooltip(root,
-      root.ready ? root.service.summary() : "Windows VM")
-    onExited: if (root.bar) root.bar.hideTooltip(root)
+    onEntered: {
+      root.hovered = true
+      if (root.service) {
+        root.service.hoverChanged(true)
+        root.service.refreshRdp()
+      }
+      if (root.bar) root.bar.showTooltip(root, root.tip)
+    }
+    onExited: {
+      if (root.hovered && root.service) root.service.hoverChanged(false)
+      root.hovered = false
+      if (root.bar) root.bar.hideTooltip(root)
+    }
   }
 
   Loader {
@@ -88,9 +105,10 @@ BarWidget {
     function open(): void { root.open() }
     function close(): void { root.close() }
     function toggle(): void { root.toggle() }
+    function connect(): string { return show() }
     function show(): string {
       if (!root.ready) return "service not ready"
-      return root.service.showRdp() ? "ok" : root.service.lastError
+      return root.service.showRdp() ? "requested (see: status)" : root.service.lastError
     }
     function restart(): string {
       if (!root.ready) return "service not ready"
@@ -105,9 +123,11 @@ BarWidget {
       var s = root.service
       return JSON.stringify({
         installed: s.installed, state: s.state, uptime: s.uptime,
-        rdpOpen: s.rdpOpen, rdpWorkspace: s.rdpWorkspace,
+        rdpOpen: s.rdpOpen, rdpKnown: s.rdpKnown, rdpWorkspace: s.rdpWorkspace,
+        statsLive: s.detailed,
         keepAlive: s.keepAlive, ramSize: s.ramSize,
-        pending: s.pendingKind, error: s.lastError
+        pending: s.pendingKind, error: s.lastError,
+        stats: s.stats
       })
     }
   }
