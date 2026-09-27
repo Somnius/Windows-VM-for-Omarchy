@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "lef.windows-vm",
+  "name": "Windows VM",
+  "version": "1.0.0",
+  "author": "lef",
+  "license": "MIT",
+  "description": "Shows on the bar whether Omarchy's Windows VM is running. Open the Windows desktop, restart or shut down from a panel. The VM stays up when the RDP window closes, and each start is logged.",
+  "kinds": [
+    "service",
+    "bar-widget"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Windows VM",
+    "description": "Windows VM status: click for the panel, right-click for the Windows desktop.",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
