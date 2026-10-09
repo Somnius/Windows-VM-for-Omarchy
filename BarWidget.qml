@@ -16,6 +16,8 @@ BarWidget {
   readonly property bool hidden: ready && service.hideWhenStopped && !running && !busy
 
   property bool hovered: false
+  // The bar only shows a tooltip for a target that reports itself hovered (Omarchy 4.0.4).
+  readonly property bool tooltipHovered: visible && hovered
   // Destroyed mid-hover (bar reload): release the hover.
   Component.onDestruction: if (hovered && service) service.hoverChanged(false)
   readonly property string tip: ready ? service.summaryText : "Windows VM"
