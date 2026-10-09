@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.1 - 2026-10-09
+
+- The hover tooltip shows again on Omarchy 4.0.4: the bar only shows a tooltip for a widget that reports itself hovered (`tooltipHovered`).
+
 ## 1.1.0 (2026-09-27)
 
 Live resource use, direct reconnect and RDP auto-reconnect. Several ideas and parts come from
