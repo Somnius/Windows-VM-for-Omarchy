@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 
 BarWidget {
@@ -49,7 +50,7 @@ BarWidget {
     anchors.centerIn: parent
     text: "\uf17a"   // Nerd Font: Windows logo
     textFormat: Text.PlainText
-    color: root.bar ? root.bar.barForeground : Color.foreground
+    color: root.bar ? root.bar.barForeground : Commons.Color.foreground
     font.family: root.bar ? root.bar.fontFamily : Style.font.family
     font.pixelSize: Style.bar.iconFont
     opacity: root.running ? 1 : 0.4

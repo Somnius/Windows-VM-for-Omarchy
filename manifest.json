@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "lef.windows-vm",
   "name": "Windows VM",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "author": "lef",
   "license": "MIT",
   "description": "Control Omarchy's Windows VM from the bar: connect without a password prompt, RDP that reconnects by itself, restart and shut down. Zero background cost: live CPU, memory, disk and network graphs are gathered only while the panel is open. Web console, shared folder, terminal and lazydocker shortcuts, optional keep-alive.",

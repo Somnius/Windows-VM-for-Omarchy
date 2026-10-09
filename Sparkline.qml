@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 
 // A small history graph: one or two series of non-negative numbers, oldest
 // first, drawn as lines scaled to the largest value on screen (or `ceiling`
@@ -10,8 +11,8 @@ Canvas {
   property var series: []          // [number]
   property var series2: []         // optional second line, e.g. upload
   property real ceiling: 0         // 0 = auto-scale
-  property color color: Color.accent
-  property color color2: Color.foreground
+  property color color: Commons.Color.accent
+  property color color2: Commons.Color.foreground
   property int capacity: 60
 
   implicitHeight: Style.space(20)

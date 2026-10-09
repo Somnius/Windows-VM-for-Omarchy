@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import qs.Commons
+import qs.Commons as Commons
 import qs.Ui
 import "Logic.js" as Logic
 
@@ -14,7 +15,7 @@ Panel {
   property var hostWidget: null
   property var service: null
   readonly property var barIdentity: hostWidget || root
-  readonly property color foreground: bar ? bar.foreground : Color.foreground
+  readonly property color foreground: bar ? bar.foreground : Commons.Color.foreground
   readonly property color dim: Qt.darker(foreground, 1.45)
   readonly property string fontFamily: bar ? bar.fontFamily : Style.font.family
 
@@ -119,7 +120,7 @@ Panel {
             Text {
               text: ""
               textFormat: Text.PlainText
-              color: root.running ? Color.accent : root.foreground
+              color: root.running ? Commons.Color.accent : root.foreground
               font.family: root.fontFamily
               font.pixelSize: Style.font.display
             }
@@ -206,16 +207,16 @@ Panel {
             width: message.implicitWidth + Style.space(20)
             height: message.implicitHeight + Style.space(10)
             radius: Style.cornerRadius
-            color: Color.background
+            color: Commons.Color.background
             border.width: 1
-            border.color: Qt.rgba(Color.accent.r, Color.accent.g, Color.accent.b, 0.45)
+            border.color: Qt.rgba(Commons.Color.accent.r, Commons.Color.accent.g, Commons.Color.accent.b, 0.45)
 
             Text {
               id: message
               anchors.centerIn: parent
               text: measuring.lines[measuring.line].toUpperCase()
               textFormat: Text.PlainText
-              color: Color.accent
+              color: Commons.Color.accent
               font.family: root.fontFamily
               font.pixelSize: Style.font.caption
               font.bold: true
@@ -251,7 +252,7 @@ Panel {
             Layout.fillWidth: true
             series: root.ready ? root.service.cpuHistory : []
             ceiling: 1
-            color: Color.accent
+            color: Commons.Color.accent
           }
 
           MeterRow {
@@ -313,7 +314,7 @@ Panel {
             Layout.fillWidth: true
             series: root.ready ? root.service.rxHistory : []
             series2: root.ready ? root.service.txHistory : []
-            color: Color.accent
+            color: Commons.Color.accent
             color2: root.foreground
           }
 
@@ -354,7 +355,7 @@ Panel {
               Layout.fillWidth: true
               text: root.copied ? "copied ✓" : root.st.container
               textFormat: Text.PlainText
-              color: root.copied ? Color.accent : root.foreground
+              color: root.copied ? Commons.Color.accent : root.foreground
               font.family: root.fontFamily
               font.pixelSize: Style.font.bodySmall
 
@@ -383,7 +384,7 @@ Panel {
           focusable: true
           enabled: root.canControl && !root.starting
           foreground: root.foreground
-          accent: Color.accent
+          accent: Commons.Color.accent
           fontFamily: root.fontFamily
           onClicked: root.showDesktop()
         }
@@ -401,7 +402,7 @@ Panel {
             selected: root.confirming === "restart"
             enabled: root.canControl && root.running
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: root.confirmOrRun("restart")
           }
@@ -415,7 +416,7 @@ Panel {
             selected: root.confirming === "stop"
             enabled: root.canControl && root.running
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: root.confirmOrRun("stop")
           }
@@ -426,7 +427,7 @@ Panel {
           visible: root.confirming !== ""
           text: "Windows will close all its apps. Save your work in Windows first."
           textFormat: Text.PlainText
-          color: Color.accent
+          color: Commons.Color.accent
           font.family: root.fontFamily
           font.pixelSize: Style.font.caption
           wrapMode: Text.WordWrap
@@ -437,7 +438,7 @@ Panel {
           visible: root.ready && root.service.lastError !== ""
           text: root.ready ? root.service.lastError : ""
           textFormat: Text.PlainText
-          color: Color.accent
+          color: Commons.Color.accent
           font.family: root.fontFamily
           font.pixelSize: Style.font.caption
           wrapMode: Text.WordWrap
@@ -466,7 +467,7 @@ Panel {
             bordered: true
             enabled: root.running || root.starting
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: { root.service.openWebConsole(); root.close() }
           }
@@ -479,7 +480,7 @@ Panel {
             bordered: true
             enabled: root.ready
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: { root.service.openShared(); root.close() }
           }
@@ -493,7 +494,7 @@ Panel {
             bordered: true
             enabled: root.running
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: { root.service.openTerminal(); root.close() }
           }
@@ -507,7 +508,7 @@ Panel {
             bordered: true
             enabled: root.ready
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: { root.service.openLazydocker(); root.close() }
           }
@@ -527,7 +528,7 @@ Panel {
             bordered: true
             enabled: root.ready
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: { root.service.openLogs(); root.close() }
           }
@@ -539,7 +540,7 @@ Panel {
             bordered: true
             selected: root.settingsOpen
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: root.settingsOpen = !root.settingsOpen
           }
@@ -551,7 +552,7 @@ Panel {
             bordered: true
             selected: root.helpOpen
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: root.helpOpen = !root.helpOpen
           }
@@ -569,7 +570,7 @@ Panel {
             description: "Closing the RDP window no longer shuts Windows down. Applies from the next start."
             checked: root.ready && root.service.keepAlive
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             enabled: root.ready
             onClicked: root.service.setKeepAlive(!root.service.keepAlive)
@@ -582,7 +583,7 @@ Panel {
               + (root.ready && root.service.ramSize !== "" ? "its " + root.service.ramSize + " of RAM" : "all of its RAM")
               + " hostage, even with no RDP window open, until you press Shut down here or shut it down from Windows."
             textFormat: Text.PlainText
-            color: Color.accent
+            color: Commons.Color.accent
             font.family: root.fontFamily
             font.pixelSize: Style.font.caption
             wrapMode: Text.WordWrap
@@ -594,7 +595,7 @@ Panel {
             description: "Show the bar icon only while Windows is running."
             checked: root.ready && root.service.hideWhenStopped
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             enabled: root.ready
             onClicked: root.service.setHideWhenStopped(!root.service.hideWhenStopped)
@@ -647,7 +648,7 @@ Panel {
             bordered: true
             enabled: root.service !== null
             foreground: root.foreground
-            accent: Color.accent
+            accent: Commons.Color.accent
             fontFamily: root.fontFamily
             onClicked: if (root.service) Qt.openUrlExternally(root.service.repoUrl + "#credits")
           }

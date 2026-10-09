@@ -1,5 +1,6 @@
 import QtQuick
 import qs.Commons
+import qs.Commons as Commons
 
 // One resource: label, a bar that warms from foreground through accent to
 // urgent as it fills, the figure, and an optional note underneath.
@@ -11,9 +12,9 @@ Item {
   property real value: 0            // 0..1, drives the bar
   property string valueText: ""
   property string note: ""
-  property color foreground: Color.foreground
-  property color midColor: Color.accent
-  property color hotColor: Color.urgent
+  property color foreground: Commons.Color.foreground
+  property color midColor: Commons.Color.accent
+  property color hotColor: Commons.Color.urgent
   property string fontFamily: Style.font.family
 
   implicitHeight: labelText.implicitHeight + (note !== "" ? noteText.implicitHeight + Style.space(2) : 0)

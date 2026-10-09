@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.2 - 2026-10-09
+
+- Ready for Qt 6.12: shell colours are imported as `Commons.Color` (`import qs.Commons as Commons`), so they keep working when Qt's own `Color` type arrives. No visible change.
+
 ## 1.1.1 - 2026-10-09
 
 - The hover tooltip shows again on Omarchy 4.0.4: the bar only shows a tooltip for a widget that reports itself hovered (`tooltipHovered`).
